@@ -76,3 +76,7 @@ int list_size(void) {
     }
     return counter;
 }
+
+NODE *list_head(void) {
+    return head_ptr;
+}
