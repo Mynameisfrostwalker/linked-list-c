@@ -95,7 +95,11 @@ void list_tail(void) {
     printf("ID at tail Node: %lu\n", ptr->id);
 }
 
-void list_at(int index) {
+void list_at(void) {
+    int index;
+    printf("Enter index of Node\n");
+    scanf("%d", &index);
+
     if (head_ptr == NULL) {
         printf("No node in list\n");
     }
