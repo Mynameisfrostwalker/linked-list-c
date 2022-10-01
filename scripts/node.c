@@ -64,3 +64,15 @@ void list_node_prepend(void) {
         head_ptr = new_ptr;
     }
 }
+
+int list_size(void) {
+    if(head_ptr == NULL) {
+        return 0;
+    }
+    NODE *ptr;
+    int counter = 0;
+    for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
+        counter++;
+    }
+    return counter;
+}
