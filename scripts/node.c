@@ -40,7 +40,7 @@ void list_node_add(void) {
 
     new_ptr = list_node_create();
     printf("Enter name and ID");
-    scanf("%s%ld", new_ptr->name, &(new_ptr->id));
+    scanf("%s%lu", new_ptr->name, &(new_ptr->id));
 
     if(head_ptr == NULL) {
         head_ptr = new_ptr;
@@ -77,6 +77,7 @@ int list_size(void) {
     return counter;
 }
 
-NODE *list_head(void) {
-    return head_ptr;
+void list_head(void) {
+    printf("Name at Head Node: %s\n", head_ptr->name);
+    printf("ID at Head Node: %lu\n", head_ptr->id);
 }
