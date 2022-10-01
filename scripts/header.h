@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef LNK_LIST_H
 #define LNK_LIST_H
@@ -21,6 +22,7 @@ void list_at(void);
 void list_node_add(void);
 void list_node_prepend(void);
 void list_pop(void);
+void list_contains(void);
 int list_size(void);
 int list_node_delete(void);
 void list_node_print(void);

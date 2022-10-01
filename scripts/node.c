@@ -74,6 +74,8 @@ int list_size(void) {
     for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
         counter++;
     }
+    printf("List size is: %d\n", counter);
+
     return counter;
 }
 
@@ -117,13 +119,15 @@ void list_at(void) {
 }
 
 void list_pop(void) {
+    NODE *lastNode_ptr;
     if (head_ptr == NULL) {
         printf("Sorry, nothing to delete\n");
     } else if (head_ptr->next_ptr == NULL) {
+        lastNode_ptr = head_ptr->next_ptr;
         head_ptr = NULL;
+        free(lastNode_ptr);
     } else {
-        NODE *ptr;
-        NODE *lastNode_ptr;
+        NODE *ptr = head_ptr;
         int counter = 1;
         while(counter < list_size() - 1) {
             ptr = ptr->next_ptr;
@@ -136,5 +140,33 @@ void list_pop(void) {
 
     if(head_ptr == NULL) {
         printf("All nodes have been deleted\n");
+    }
+}
+
+void list_contains(void) {
+    if (head_ptr == NULL) {
+        printf("No node in list\n");
+    }
+
+    char *name;
+    int id;
+    int exists = 0;
+
+    printf("Enter name and ID you are searching for\n");
+    scanf("%s%lu", name, &id);
+    NODE *ptr = head_ptr;
+    int counter = 1;
+    while(counter < list_size()) {
+        if(ptr->id == id && strcmp(ptr->name, name) == 0) {
+            printf("Node with name %s and ID %lu\n exists", name, id);
+            exists = 1;
+            counter = list_size();
+        }
+        ptr = ptr->next_ptr;
+        counter++;
+    }
+
+    if(exists = 0) {
+        printf("No node with name %s and ID %lu\n exists", name, id);
     }
 }
