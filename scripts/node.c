@@ -8,7 +8,7 @@ static NODE *head_ptr = NULL;
 void main_interface(int ch) {
     switch (ch) {
         case 'a':
-            list_node_add();
+            list_node_append();
             break;
         case 'd':
             if(!(list_node_delete())) {
@@ -35,7 +35,7 @@ NODE *list_node_create(void) {
     return ptr;
 }
 
-void list_node_add(void) {
+void list_node_append(void) {
     NODE *new_ptr, *ptr;
 
     new_ptr = list_node_create();
@@ -170,3 +170,33 @@ void list_contains(void) {
         printf("No node with name %s and ID %lu\n exists", name, id);
     }
 }
+
+void list_find(void) {
+    if (head_ptr == NULL) {
+        printf("No node in list\n");
+    }
+
+    char *name;
+    int id;
+    int exists = 0;
+
+    printf("Enter name and ID you are searching for\n");
+    scanf("%s%lu", name, &id);
+    NODE *ptr = head_ptr;
+    int counter = 1;
+    while(counter < list_size()) {
+        if(ptr->id == id && strcmp(ptr->name, name) == 0) {
+            printf("Node with name %s and ID %lu\n has an index of: %d", name, id, counter);
+            exists = 1;
+            counter = list_size();
+        }
+        ptr = ptr->next_ptr;
+        counter++;
+    }
+
+    if(exists = 0) {
+        printf("No node with name %s and ID %lu\n exists", name, id);
+    }
+}
+
+
