@@ -70,7 +70,7 @@ int list_size(void) {
         return 0;
     }
     NODE *ptr;
-    int counter = 0;
+    int counter = 1;
     for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
         counter++;
     }
@@ -79,7 +79,7 @@ int list_size(void) {
 
 void list_head(void) {
     if (head_ptr == NULL) {
-        printf("No node in list");
+        printf("No node in list\n");
     }
     printf("Name at Head Node: %s\n", head_ptr->name);
     printf("ID at Head Node: %lu\n", head_ptr->id);
@@ -87,10 +87,27 @@ void list_head(void) {
 
 void list_tail(void) {
     if (head_ptr == NULL) {
-        printf("No node in list");
+        printf("No node in list\n");
     }
     NODE *ptr;
     for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr);
     printf("Name at tail Node: %s\n", ptr->name);
     printf("ID at tail Node: %lu\n", ptr->id);
+}
+
+void list_at(int index) {
+    if (head_ptr == NULL) {
+        printf("No node in list\n");
+    }
+    if(list_size() < index) {
+        printf("Index is too large, only %s nodes in list\n", list_size());
+    }
+    NODE *ptr = head_ptr;
+    int counter = 1;
+    while (counter < index) {
+        ptr = ptr->next_ptr;
+        counter++;
+    }
+    printf("Name at node %d: %s\n", index, ptr->name);
+    printf("ID at node %d: %lu\n", index, ptr->id);
 }

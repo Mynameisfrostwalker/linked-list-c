@@ -17,6 +17,7 @@ typedef struct link_list_struct NODE;
 NODE *list_node_create(void);
 void list_head(void);
 void list_tail(void);
+void list_at(int);
 void list_node_add(void);
 void list_node_prepend(void);
 int list_size(void);
