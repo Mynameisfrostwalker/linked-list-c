@@ -49,3 +49,18 @@ void list_node_add(void) {
         ptr->next_ptr = new_ptr;
     }
 }
+
+void list_node_prepend(void) {
+    NODE *new_ptr, *ptr;
+
+    new_ptr = list_node_create();
+    printf("Enter name and ID");
+    scanf("%s%ld", new_ptr->name, &(new_ptr->id));
+
+    if(head_ptr == NULL) {
+        head_ptr = new_ptr;
+    } else {
+        new_ptr->next_ptr = head_ptr;
+        head_ptr = new_ptr;
+    }
+}
