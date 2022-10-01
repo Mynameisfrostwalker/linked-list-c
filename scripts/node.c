@@ -23,3 +23,14 @@ void main_interface(int ch) {
     }
 }
 
+NODE *list_node_create(void) {
+    NODE *ptr;
+
+    if((ptr = (NODE *)malloc(sizeof(NODE))) == NULL) {
+        errorExit("malloc() failed");
+    }
+
+    ptr->next_ptr = NULL;
+    ptr->id = 0;
+    return ptr;
+}
