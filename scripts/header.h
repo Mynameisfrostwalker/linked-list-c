@@ -20,6 +20,7 @@ void list_tail(void);
 void list_at(void);
 void list_node_add(void);
 void list_node_prepend(void);
+void list_pop(void);
 int list_size(void);
 int list_node_delete(void);
 void list_node_print(void);

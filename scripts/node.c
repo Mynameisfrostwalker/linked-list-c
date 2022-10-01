@@ -115,3 +115,26 @@ void list_at(void) {
     printf("Name at node %d: %s\n", index, ptr->name);
     printf("ID at node %d: %lu\n", index, ptr->id);
 }
+
+void list_pop(void) {
+    if (head_ptr == NULL) {
+        printf("Sorry, nothing to delete\n");
+    } else if (head_ptr->next_ptr == NULL) {
+        head_ptr = NULL;
+    } else {
+        NODE *ptr;
+        NODE *lastNode_ptr;
+        int counter = 1;
+        while(counter < list_size() - 1) {
+            ptr = ptr->next_ptr;
+            counter++;
+        }
+        lastNode_ptr = ptr->next_ptr;
+        ptr->next_ptr = NULL;
+        free(lastNode_ptr);
+    }
+
+    if(head_ptr == NULL) {
+        printf("All nodes have been deleted\n");
+    }
+}
