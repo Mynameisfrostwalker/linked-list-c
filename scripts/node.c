@@ -158,7 +158,7 @@ void list_contains(void) {
     int counter = 1;
     while(counter < list_size()) {
         if(ptr->id == id && strcmp(ptr->name, name) == 0) {
-            printf("Node with name %s and ID %lu\n exists", name, id);
+            printf("Node with name %s and ID %lu exists\n", name, id);
             exists = 1;
             counter = list_size();
         }
@@ -167,7 +167,7 @@ void list_contains(void) {
     }
 
     if(exists = 0) {
-        printf("No node with name %s and ID %lu\n exists", name, id);
+        printf("No node with name %s and ID %lu exists\n", name, id);
     }
 }
 
@@ -186,7 +186,7 @@ void list_find(void) {
     int counter = 1;
     while(counter < list_size()) {
         if(ptr->id == id && strcmp(ptr->name, name) == 0) {
-            printf("Node with name %s and ID %lu\n has an index of: %d", name, id, counter);
+            printf("Node with name %s and ID %lu has an index of\n: %d", name, id, counter);
             exists = 1;
             counter = list_size();
         }
@@ -195,8 +195,34 @@ void list_find(void) {
     }
 
     if(exists = 0) {
-        printf("No node with name %s and ID %lu\n exists", name, id);
+        printf("No node with name %s and ID %lu exists\n", name, id);
     }
 }
 
+void list_insert_at(void) {
+    int index;
+    printf("Enter index of node\n");
+    scanf("%d", &index);
 
+    if(index > list_size()) {
+        list_node_prepend();
+    }else if(index <= 1) {
+        list_node_append();
+    }else {
+        NODE *new_ptr, *ptr;
+
+        new_ptr = list_node_create();
+        printf("Enter name and ID");
+        scanf("%s%ld", new_ptr->name, &(new_ptr->id));
+
+        int counter = 2; // ptr will point to node of index - 1 at end of while loop
+        ptr = head_ptr;
+        while (counter < index) {
+            ptr = ptr->next_ptr;
+            counter++;
+        }
+
+        new_ptr->next_ptr = ptr->next_ptr;
+        ptr->next_ptr = new_ptr;
+    }
+}
