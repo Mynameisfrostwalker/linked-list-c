@@ -78,6 +78,19 @@ int list_size(void) {
 }
 
 void list_head(void) {
+    if (head_ptr == NULL) {
+        printf("No node in list");
+    }
     printf("Name at Head Node: %s\n", head_ptr->name);
     printf("ID at Head Node: %lu\n", head_ptr->id);
+}
+
+void list_tail(void) {
+    if (head_ptr == NULL) {
+        printf("No node in list");
+    }
+    NODE *ptr;
+    for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr);
+    printf("Name at tail Node: %s\n", ptr->name);
+    printf("ID at tail Node: %lu\n", ptr->id);
 }
