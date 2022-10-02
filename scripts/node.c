@@ -275,3 +275,13 @@ void list_node_print(void) {
         printf("%s:%d ->|\n", ptr->name, ptr->id);
     }
 }
+
+void list_node_free(void) {
+    NODE *ptr, *ptr_saved;
+
+    for(ptr = head_ptr; ptr != NULL;) {
+        ptr_saved = ptr->next_ptr;
+        free(ptr);
+        ptr = ptr_saved;
+    }
+}
