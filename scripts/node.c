@@ -72,6 +72,7 @@ int list_size(void) {
     for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
         counter++;
     }
+    counter++;
     printf("List size is: %d\n", counter);
 
     return counter;
@@ -91,6 +92,7 @@ void list_tail(void) {
     }
     NODE *ptr;
     for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr);
+    ptr = ptr->next_ptr;
     printf("Name at tail Node: %s\n", ptr->name);
     printf("ID at tail Node: %lu\n", ptr->id);
 }
@@ -256,5 +258,20 @@ int list_node_delete(void) {
 
     if(head_ptr == NULL) {
         printf("All nodes have been deleted\n");
+    }
+}
+
+void list_node_print(void) {
+    NODE *ptr;
+
+    if(head_ptr == NULL) {
+        printf("Sorry, nothing to print\n");
+    } else {
+        printf("The contents of the linked list:\n");
+        for(ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
+            printf("%s:%d -> ", ptr->name, ptr->id);
+        }
+
+        printf("%s:%d ->|\n", ptr->name, ptr->id);
     }
 }
