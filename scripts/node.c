@@ -45,6 +45,9 @@ void main_interface(int ch) {
         case 'i':
             list_insert_at();
             break;
+        case 'w':
+            list_node_write();
+            break;
         default:
             break;
     }
@@ -322,6 +325,35 @@ void list_node_print(void) {
 
         printf("%s:%lu ->|\n", ptr->name, ptr->id);
     }
+}
+
+void list_node_write(void) {
+    FILE *fptr;
+    NODE *ptr;
+    char filename[] = "linked-list.txt";
+
+    if((fptr = fopen(filename, "w+")) == NULL){
+        errorExit("Couldn't open file for writing");
+    } else {
+
+        if(head_ptr == NULL) {
+            fprintf(fptr, "Sorry, nothing to print\n");
+        } else {
+            fprintf(fptr, "The contents of the linked list:\n");
+
+            fprintf(fptr, "            Name   |   ID\n");
+            fprintf(fptr, "------------------------------\n");
+            for(ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
+                fprintf(fptr, "%-16s   |   %10lu\n", ptr->name, ptr->id);
+                fprintf(fptr, "------------------------------\n");
+            }
+
+            fprintf(fptr, "%-16s   |   %10lu\n", ptr->name, ptr->id);
+            fprintf(fptr, "------------------------------\n");
+        }
+    }
+    printf("Contents of linked list has been written to %s\n", filename);
+    fclose(fptr);
 }
 
 void list_node_free(void) {

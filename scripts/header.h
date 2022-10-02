@@ -29,6 +29,7 @@ void list_size(void);
 void list_node_delete(void);
 void list_node_print(void);
 void list_node_free(void);
+void list_node_write(void);
 void errorExit(char *);
 void main_interface(int);
 
