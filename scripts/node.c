@@ -16,6 +16,33 @@ void main_interface(int ch) {
         case 'p':
             list_node_print();
             break;
+        case 'r':
+            list_node_prepend();
+            break;
+        case 's':
+            list_node_size();
+            break;
+        case 'h':
+            list_node_head();
+            break;  
+        case 't':
+            list_node_tail();
+            break;
+        case 'z':
+            list_node_at();
+            break;
+        case 'o':
+            list_node_pop();
+            break;
+        case 'c':
+            list_contains();
+            break;
+        case 'f':
+            list_find();
+            break;
+        case 'i':
+            list_insert_at();
+            break;
         default:
             break;
     }
