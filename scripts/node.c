@@ -11,9 +11,7 @@ void main_interface(int ch) {
             list_node_append();
             break;
         case 'd':
-            if(!(list_node_delete())) {
-                list_node_print();
-            }
+            list_node_delete();
             break;
         case 'p':
             list_node_print();
@@ -123,9 +121,8 @@ void list_pop(void) {
     if (head_ptr == NULL) {
         printf("Sorry, nothing to delete\n");
     } else if (head_ptr->next_ptr == NULL) {
-        lastNode_ptr = head_ptr->next_ptr;
         head_ptr = NULL;
-        free(lastNode_ptr);
+        free(head_ptr);
     } else {
         NODE *ptr = head_ptr;
         int counter = 1;
@@ -215,7 +212,7 @@ void list_insert_at(void) {
         printf("Enter name and ID");
         scanf("%s%ld", new_ptr->name, &(new_ptr->id));
 
-        int counter = 2; // ptr will point to node of index - 1 at end of while loop
+        int counter = 2;
         ptr = head_ptr;
         while (counter < index) {
             ptr = ptr->next_ptr;
@@ -224,5 +221,40 @@ void list_insert_at(void) {
 
         new_ptr->next_ptr = ptr->next_ptr;
         ptr->next_ptr = new_ptr;
+    }
+}
+
+int list_node_delete(void) {
+    NODE *lastNode_ptr;
+    int index;
+    if (head_ptr == NULL) {
+        printf("Sorry, nothing to delete\n");
+    } else {
+        printf("Enter index of node to delete\n");
+        scanf("%d", &index);
+        if(index > list_size()) {
+            list_pop();
+        } else if (index == 1) {
+            NODE *ptr_tmp;
+            ptr_tmp = head_ptr;
+            head_ptr = head_ptr->next_ptr;
+            free(ptr_tmp);
+        } else if (index > 1) {
+            NODE *ptr = head_ptr;
+            int counter = 1;
+            while(counter < index - 1) {
+                ptr = ptr->next_ptr;
+                counter++;
+            }
+            lastNode_ptr = ptr->next_ptr;
+            ptr->next_ptr = lastNode_ptr->next_ptr;
+            free(lastNode_ptr);
+        } else {
+            printf("Cannot find node at index %d\n", index);
+        }
+    }
+
+    if(head_ptr == NULL) {
+        printf("All nodes have been deleted\n");
     }
 }
