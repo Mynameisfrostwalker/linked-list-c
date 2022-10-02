@@ -5,6 +5,8 @@
 
 static NODE *head_ptr = NULL;
 
+int private_list_size(void);
+
 void main_interface(int ch) {
     switch (ch) {
         case 'a':
@@ -20,19 +22,19 @@ void main_interface(int ch) {
             list_node_prepend();
             break;
         case 's':
-            list_node_size();
+            list_size();
             break;
         case 'h':
-            list_node_head();
+            list_head();
             break;  
         case 't':
-            list_node_tail();
+            list_tail();
             break;
         case 'z':
-            list_node_at();
+            list_at();
             break;
         case 'o':
-            list_node_pop();
+            list_pop();
             break;
         case 'c':
             list_contains();
@@ -64,7 +66,7 @@ void list_node_append(void) {
     NODE *new_ptr, *ptr;
 
     new_ptr = list_node_create();
-    printf("Enter name and ID");
+    printf("Enter name and ID\n");
     scanf("%s%lu", new_ptr->name, &(new_ptr->id));
 
     if(head_ptr == NULL) {
@@ -76,10 +78,10 @@ void list_node_append(void) {
 }
 
 void list_node_prepend(void) {
-    NODE *new_ptr, *ptr;
+    NODE *new_ptr;
 
     new_ptr = list_node_create();
-    printf("Enter name and ID");
+    printf("Enter name and ID\n");
     scanf("%s%ld", new_ptr->name, &(new_ptr->id));
 
     if(head_ptr == NULL) {
@@ -90,38 +92,52 @@ void list_node_prepend(void) {
     }
 }
 
-int list_size(void) {
+int private_list_size(void) {
     if(head_ptr == NULL) {
         return 0;
-    }
+    } else {
     NODE *ptr;
-    int counter = 1;
-    for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
-        counter++;
-    }
-    counter++;
-    printf("List size is: %d\n", counter);
+        int counter = 1;
+        for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
+            counter++;
+        }
 
-    return counter;
+        return counter;
+    }
+}
+
+
+void list_size(void) {
+    if(head_ptr == NULL) {
+        printf("List size is 0\n");
+    } else {
+    NODE *ptr;
+        int counter = 1;
+        for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
+            counter++;
+        }
+        printf("List size is: %d\n", counter);
+    }
 }
 
 void list_head(void) {
     if (head_ptr == NULL) {
         printf("No node in list\n");
+    } else {
+        printf("Name at Head Node: %s\n", head_ptr->name);
+        printf("ID at Head Node: %lu\n", head_ptr->id);
     }
-    printf("Name at Head Node: %s\n", head_ptr->name);
-    printf("ID at Head Node: %lu\n", head_ptr->id);
 }
 
 void list_tail(void) {
     if (head_ptr == NULL) {
         printf("No node in list\n");
+    } else {
+        NODE *ptr;
+        for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr);
+        printf("Name at tail Node: %s\n", ptr->name);
+        printf("ID at tail Node: %lu\n", ptr->id);
     }
-    NODE *ptr;
-    for (ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr);
-    ptr = ptr->next_ptr;
-    printf("Name at tail Node: %s\n", ptr->name);
-    printf("ID at tail Node: %lu\n", ptr->id);
 }
 
 void list_at(void) {
@@ -131,9 +147,11 @@ void list_at(void) {
 
     if (head_ptr == NULL) {
         printf("No node in list\n");
+        return;
     }
-    if(list_size() < index) {
-        printf("Index is too large, only %s nodes in list\n", list_size());
+    if(private_list_size() < index) {
+        printf("Index is too large, only %d nodes in list\n", private_list_size());
+        return;
     }
     NODE *ptr = head_ptr;
     int counter = 1;
@@ -150,12 +168,13 @@ void list_pop(void) {
     if (head_ptr == NULL) {
         printf("Sorry, nothing to delete\n");
     } else if (head_ptr->next_ptr == NULL) {
+        lastNode_ptr = head_ptr;
         head_ptr = NULL;
-        free(head_ptr);
+        free(lastNode_ptr);
     } else {
         NODE *ptr = head_ptr;
         int counter = 1;
-        while(counter < list_size() - 1) {
+        while(counter < private_list_size() - 1) {
             ptr = ptr->next_ptr;
             counter++;
         }
@@ -172,27 +191,28 @@ void list_pop(void) {
 void list_contains(void) {
     if (head_ptr == NULL) {
         printf("No node in list\n");
+        return;
     }
 
-    char *name;
-    int id;
+    char name[MAX_LENGTH];
+    unsigned long id;
     int exists = 0;
 
     printf("Enter name and ID you are searching for\n");
     scanf("%s%lu", name, &id);
     NODE *ptr = head_ptr;
     int counter = 1;
-    while(counter < list_size()) {
+    while(counter <= private_list_size()) {
         if(ptr->id == id && strcmp(ptr->name, name) == 0) {
             printf("Node with name %s and ID %lu exists\n", name, id);
             exists = 1;
-            counter = list_size();
+            counter = private_list_size();
         }
         ptr = ptr->next_ptr;
         counter++;
     }
 
-    if(exists = 0) {
+    if(exists == 0) {
         printf("No node with name %s and ID %lu exists\n", name, id);
     }
 }
@@ -200,27 +220,28 @@ void list_contains(void) {
 void list_find(void) {
     if (head_ptr == NULL) {
         printf("No node in list\n");
+        return;
     }
 
-    char *name;
-    int id;
+    char name[MAX_LENGTH];
+    unsigned long id;
     int exists = 0;
 
     printf("Enter name and ID you are searching for\n");
     scanf("%s%lu", name, &id);
     NODE *ptr = head_ptr;
     int counter = 1;
-    while(counter < list_size()) {
+    while(counter <= private_list_size()) {
         if(ptr->id == id && strcmp(ptr->name, name) == 0) {
-            printf("Node with name %s and ID %lu has an index of\n: %d", name, id, counter);
+            printf("Node with name %s and ID %lu has an index of: %d\n", name, id, counter);
             exists = 1;
-            counter = list_size();
+            counter = private_list_size();
         }
         ptr = ptr->next_ptr;
         counter++;
     }
 
-    if(exists = 0) {
+    if(exists == 0) {
         printf("No node with name %s and ID %lu exists\n", name, id);
     }
 }
@@ -230,15 +251,15 @@ void list_insert_at(void) {
     printf("Enter index of node\n");
     scanf("%d", &index);
 
-    if(index > list_size()) {
-        list_node_prepend();
-    }else if(index <= 1) {
+    if(index > private_list_size()) {
         list_node_append();
+    }else if(index <= 1) {
+        list_node_prepend();
     }else {
         NODE *new_ptr, *ptr;
 
         new_ptr = list_node_create();
-        printf("Enter name and ID");
+        printf("Enter name and ID\n");
         scanf("%s%ld", new_ptr->name, &(new_ptr->id));
 
         int counter = 2;
@@ -253,7 +274,7 @@ void list_insert_at(void) {
     }
 }
 
-int list_node_delete(void) {
+void list_node_delete(void) {
     NODE *lastNode_ptr;
     int index;
     if (head_ptr == NULL) {
@@ -261,7 +282,7 @@ int list_node_delete(void) {
     } else {
         printf("Enter index of node to delete\n");
         scanf("%d", &index);
-        if(index > list_size()) {
+        if(index > private_list_size()) {
             list_pop();
         } else if (index == 1) {
             NODE *ptr_tmp;
@@ -296,10 +317,10 @@ void list_node_print(void) {
     } else {
         printf("The contents of the linked list:\n");
         for(ptr = head_ptr; ptr->next_ptr != NULL; ptr = ptr->next_ptr) {
-            printf("%s:%d -> ", ptr->name, ptr->id);
+            printf("%s:%lu -> ", ptr->name, ptr->id);
         }
 
-        printf("%s:%d ->|\n", ptr->name, ptr->id);
+        printf("%s:%lu ->|\n", ptr->name, ptr->id);
     }
 }
 
